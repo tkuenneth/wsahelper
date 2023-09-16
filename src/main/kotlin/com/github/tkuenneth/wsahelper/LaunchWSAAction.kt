@@ -41,7 +41,7 @@ class LaunchWSAAction : AnAction() {
             stderr = stderr,
             cmd = "adb connect 127.0.0.1:58526"
         ))
-        MessageDialog(
+        if (!adbFound || !wsaFound || !wsaConnected) MessageDialog(
             adbFound = adbFound,
             wsaFound = wsaFound,
             wsaConnected = wsaConnected

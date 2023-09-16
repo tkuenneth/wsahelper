@@ -10,7 +10,7 @@ class MessageDialog(
     private val wsaConnected: Boolean
 ) : DialogWrapper(true) {
     init {
-        title = "Test DialogWrapper"
+        title = getString("title")
         init()
     }
 
@@ -48,5 +48,5 @@ private fun createLabel(
     text: String,
     checked: Boolean
 ): JLabel = JLabel().also {
-    it.text = "$checked $text"
+    it.text = "${ if (checked) "\u2705" else "\u274c"} $text"
 }

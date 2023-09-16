@@ -7,15 +7,13 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>Windows Subsystem for Android Helper</name>
 
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="thomas@thomaskuenneth.eu" url="https://github.com/tkuenneth">Thomas Künneth</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    A simple plugin to launch the Windows Subsystem for Android™.
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -31,7 +29,7 @@
         <action id="com.github.tkuenneth.wsahelper.LaunchWSAAction"
                 class="com.github.tkuenneth.wsahelper.LaunchWSAAction"
                 text="Launch Windows Subsystem for Android™"
-                description="Launch Windows Subsystem for Android™">
+                description="Launch Windows Subsystem for Android™ and connect">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>
