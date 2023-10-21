@@ -7,6 +7,13 @@ Android™.
 11?*
 
 Yes, that's right. This plugin is helpful if you want to run your Android app on
-the Windows Subsystem for Android™ **from within your IDE**, in order to run 
-or debug your Android app.
+the Windows Subsystem for Android™ **from within your IDE**. 
+
+To run or debug an app from the IDE, you select a target and press the green 
+play button. The Windows 
+Subsystem for Android™ will appear as a target, if it is running and if an 
+`adb connect` has been done. These steps can be executed manually, as 
+described in the [Test and debug](https://learn.microsoft.
+com/en-us/windows/android/wsa/#test-and-debug) section of the Windows 
+Subsystem for Android™️ documentation.
 
