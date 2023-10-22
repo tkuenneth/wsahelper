@@ -24,6 +24,7 @@
                            displayType="BALLOON"/>
     </extensions>
     <actions>
+        <!--suppress PluginXmlCapitalization -->
         <action id="com.github.tkuenneth.wsahelper.LaunchWSAAction"
                 class="com.github.tkuenneth.wsahelper.LaunchWSAAction"
                 text="Launch Windows Subsystem for Android™"
