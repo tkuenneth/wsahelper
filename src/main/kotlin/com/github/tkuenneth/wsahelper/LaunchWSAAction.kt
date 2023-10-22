@@ -6,9 +6,13 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import org.jetbrains.annotations.NotNull
 import java.io.File
 import java.util.*
+import javax.swing.SwingUtilities
+import kotlin.concurrent.thread
 
 private const val PATH =
     "AppData\\Local\\Microsoft\\WindowsApps\\MicrosoftCorporationII.WindowsSubsystemForAndroid_8wekyb3d8bbwe\\WsaClient.exe"
+
+private const val ipAddressAndPort = "127.0.0.1:58526"
 
 class LaunchWSAAction : AnAction() {
     override fun update(@NotNull event: AnActionEvent) {
@@ -22,30 +26,45 @@ class LaunchWSAAction : AnAction() {
     }
 
     override fun actionPerformed(@NotNull event: AnActionEvent) {
-        val stdout = StringBuilder()
-        val stderr = StringBuilder()
-        val client = File(System.getProperty("user.home"), PATH)
-        val adbFound = execute(
-            stdout = stdout,
-            stderr = stderr,
-            cmd = "adb devices"
-        )
-        val allDone = stdout.toString().contains("127.0.0.1:58526")
-        val wsaFound = allDone || execute(
-            stdout = stdout,
-            stderr = stderr,
-            cmd = client.absolutePath
-        )
-        val wsaConnected = allDone || (wsaFound && execute(
-            stdout = stdout,
-            stderr = stderr,
-            cmd = "adb connect 127.0.0.1:58526"
-        ))
-        if (!adbFound || !wsaFound || !wsaConnected) MessageDialog(
-            adbFound = adbFound,
-            wsaFound = wsaFound,
-            wsaConnected = wsaConnected
-        ).showAndGet()
+        thread {
+            val stdout = StringBuilder()
+            val stderr = StringBuilder()
+            val client = File(System.getProperty("user.home"), PATH)
+            val adbFound = execute(
+                stdout = stdout,
+                stderr = stderr,
+                cmd = "adb devices"
+            )
+            if (adbFound) {
+                Notifier.notifySuccess(null, getString("adb_found"))
+            }
+            val ipAddressFound = stdout.toString().contains(ipAddressAndPort)
+            val wsaFound = ipAddressFound || execute(
+                stdout = stdout,
+                stderr = stderr,
+                cmd = client.absolutePath
+            )
+            if (wsaFound) {
+                Notifier.notifySuccess(null, getString("wsa_found"))
+            }
+            val wsaConnected = ipAddressFound || (wsaFound && execute(
+                stdout = stdout,
+                stderr = stderr,
+                cmd = "adb connect $ipAddressAndPort"
+            ))
+            if (wsaConnected) {
+                Notifier.notifySuccess(null, getString("wsa_connected"))
+            }
+            if (!adbFound || !wsaFound || !wsaConnected) {
+                SwingUtilities.invokeLater {
+                    MessageDialog(
+                        adbFound = adbFound,
+                        wsaFound = wsaFound,
+                        wsaConnected = wsaConnected
+                    ).showAndGet()
+                }
+            }
+        }
     }
 }
 
